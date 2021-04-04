@@ -1,0 +1,36 @@
+version: "3.7"
+services:
+  web:
+    build: angular
+    ports:
+      - 4200:4200
+    networks:
+      - angular-node
+    depends_on:
+      - backend
+    volumes:
+      - ./angular:/project
+      - /project/node_modules
+  backend:
+    build: node
+    depends_on:
+      - db
+    networks:
+      - angular-node
+      - node-mongo
+    ports:
+      - 3000:3000
+    volumes:
+      - ./node:/usr/src/app
+      - /usr/src/app/node_modules
+  db:
+    image: mongo:4.2.0
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data:/data/db
+    networks:
+      - node-mongo
+networks:
+  angular-node:
+  node-mongo:
