@@ -1,1 +1,7 @@
-<pre>{{ todo$ | async | json}}</pre>
+<ng-container *ngIf="todo$ | async; let list">
+  <ul>
+    <li *ngFor="let todo of list">{{ todo?.body?.item }}</li>
+  </ul>
+</ng-container>
+
+<input type="text" (keyup.enter)="addTodo($event)" name="" id="" />
